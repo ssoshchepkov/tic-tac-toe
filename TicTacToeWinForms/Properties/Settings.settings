@@ -1,7 +1,15 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TicTacToeWinForms.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ButtonControlSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">80, 80</Value>
+    </Setting>
+    <Setting Name="InfoPanelSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">354, 40</Value>
+    </Setting>
+    <Setting Name="FieldSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
