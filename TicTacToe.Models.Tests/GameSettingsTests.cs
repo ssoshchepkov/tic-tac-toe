@@ -106,5 +106,17 @@ namespace TicTacToe.Models.Tests
 
             Assert.Equal(value, settings.FieldSize);
         }
+
+        [Fact]
+        public void For_Less_Than_Two_Player_Validate_Should_Throw_ArgumentOutOfRangeException()
+        {
+            Player p = new Player(Symbols.X);
+            GameSettings settings = new GameSettings(GameSettings.MINIMAL_FIELD_SIZE, Substitute.For<IVictoryConditions>());
+
+            settings.AddPlayer(p); // add one player
+
+            Exception exception = Record.Exception(() => settings.Validate());
+            Assert.IsType<ArgumentOutOfRangeException>(exception);
+        }
     }
 }

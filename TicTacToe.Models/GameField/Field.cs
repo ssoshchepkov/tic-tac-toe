@@ -17,7 +17,7 @@ namespace TicTacToe.Models.GameField
         public int Size { get; }
 
         /// <summary>
-        /// Field inner representation as a 2-dimensional array of cells.
+        /// Inner representation of the field as a 2-dimensional array of cells.
         /// </summary>
         private Cell[,] _cells;
 

@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicTacToe.Models.GameField;
-using TicTacToe.Models.VictoryConditions;
 
 namespace TicTacToe.Models
 {
     /// <summary>
     /// Tic-tac-toe game engine.
     /// </summary>
-    public class Game
+    public class Game : IGame
     {
         /// <summary>
         /// Index of current active player for <see cref="GameSettings.Players"/> list.
@@ -34,23 +33,19 @@ namespace TicTacToe.Models
         private readonly int _maxTurn;
 
         /// <summary>
-        /// Minimum amount of players required for the game.
-        /// </summary>
-        private const int MIN_PLAYER_COUNT = 2;
-
-        /// <summary>
         /// Game settings.
         /// </summary>
-        private readonly GameSettings _settings;
+        private readonly IGameSettings _settings;
 
         /// <summary>
         ///  Creates a new instance of <see cref="Game"/> with specified game settings.
         /// </summary>
         /// <param name="settings">Settings of this game.</param>
-        public Game(GameSettings settings)
+        public Game(IGameSettings settings)
         {
-            if (settings.Players.Count() < MIN_PLAYER_COUNT)
-                throw new ArgumentOutOfRangeException($"The game should have at least {MIN_PLAYER_COUNT} players!");
+            if (settings == null) throw new ArgumentNullException(nameof(settings), "Settings can't be null!");
+
+            settings.Validate();
 
             _settings = settings;
 

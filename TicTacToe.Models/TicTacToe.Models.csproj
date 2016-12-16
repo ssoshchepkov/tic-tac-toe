@@ -46,6 +46,8 @@
     <Compile Include="GameField\IField.cs" />
     <Compile Include="GameResult.cs" />
     <Compile Include="GameSettings.cs" />
+    <Compile Include="IGame.cs" />
+    <Compile Include="IGameSettings.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameField\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

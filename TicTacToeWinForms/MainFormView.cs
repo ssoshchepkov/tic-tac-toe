@@ -18,10 +18,16 @@ using TicTacToeWinForms.ViewModels;
 
 namespace TicTacToeWinForms
 {
+    /// <summary>
+    /// Represents the main application window.
+    /// </summary>
     public partial class MainFormView : Form, IViewFor<MainViewModel>
     {
         private FieldControl _gameField;
- 
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MainFormView"/>.
+        /// </summary>
         public MainFormView()
         {
             InitializeComponent();
@@ -32,7 +38,9 @@ namespace TicTacToeWinForms
 
             VM = new MainViewModel(new WinFormsApplicationService(), new WinFormsMessageBoxService(), settings);
 
+            // Binding 'Exit' menu element
             this.BindCommand(VM, x => x.ExitCommand, x => x.exitToolStripMenuItem);
+            // Binding 'New game' menu element
             this.BindCommand(VM, x => x.NewGameCommand, x => x.newGameToolStripMenuItem);
 
             // Create a view for a new game
@@ -50,6 +58,9 @@ namespace TicTacToeWinForms
             ResizeWindow();
         }
 
+        /// <summary>
+        /// Recalculates width and height of this window depending on the size of game field.
+        /// </summary>
         private void ResizeWindow()
         {
             int dx = Width - ClientRectangle.Width;
@@ -58,9 +69,8 @@ namespace TicTacToeWinForms
             Height = Padding.Top + Padding.Bottom + Settings.Default.ButtonControlSize.Height * VM.Settings.FieldSize + dy + Settings.Default.InfoPanelSize.Height + mainMenu.Bottom;
         }
 
-
+        #region ViewModel
         public MainViewModel VM { get; private set; }
-
         object IViewFor.ViewModel
         {
             get { return VM; }
@@ -72,5 +82,6 @@ namespace TicTacToeWinForms
             get { return VM; }
             set { VM = value; }
         }
+        #endregion ViewModel
     }
 }

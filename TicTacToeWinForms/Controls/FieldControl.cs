@@ -14,10 +14,20 @@ using TicTacToeWinForms.Properties;
 
 namespace TicTacToeWinForms.Controls
 {
+    /// <summary>
+    /// Represents View class for a game field
+    /// </summary>
     public partial class FieldControl : UserControl, IViewFor<GameFieldViewModel>
     {
+        /// <summary>
+        /// Contains views for all cell of this field.
+        /// </summary>
         private List<CellControl> _cells;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="FieldControl"/> with specified view model.
+        /// </summary>
+        /// <param name="viewModel">View model for this view.</param>
         public FieldControl(GameFieldViewModel viewModel)
         {
             InitializeComponent();
@@ -28,6 +38,7 @@ namespace TicTacToeWinForms.Controls
 
             CellControl cell = null;
 
+            // creating views for all cells
             for (int row = 0; row < VM.FieldSize; row += 1)
             {
                 for (int col = 0; col < VM.FieldSize; col += 1)
@@ -39,12 +50,17 @@ namespace TicTacToeWinForms.Controls
                 }
             }
 
+            // Binding turn indicator to ViewModel
             this.OneWayBind(VM, x => x.CurrentTurn, x => x.turnLabel.Text);
+            // Binding current player indicator to ViewModel
             this.OneWayBind(VM, x => x.CurrentPlayerSymbol, x => x.playerLabel.Text);
 
             ResizeView();
         }
 
+        /// <summary>
+        /// Recalculates width and height of this control depending on the size of game field.
+        /// </summary>
         private void ResizeView()
         {
             int dx = Width - ClientRectangle.Width;
@@ -53,6 +69,7 @@ namespace TicTacToeWinForms.Controls
             Height = Padding.Top + Padding.Bottom + Settings.Default.ButtonControlSize.Height * VM.FieldSize + dy + Settings.Default.InfoPanelSize.Height;
         }
 
+        #region ViewModel
         public GameFieldViewModel VM { get; private set; }
 
         object IViewFor.ViewModel
@@ -66,5 +83,6 @@ namespace TicTacToeWinForms.Controls
             get { return VM; }
             set { VM = value; }
         }
+        #endregion ViewModel
     }
 }

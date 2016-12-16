@@ -13,15 +13,18 @@ namespace TicTacToe.Models.Tests
     public class GameTests
     {
         [Fact]
-        public void Less_Than_Two_Player_Should_Throw_ArgumentOutOfRangeException()
+        public void Constructor_Should_Throw_ArgumentNullException()
         {
-            Player p = new Player(Symbols.X);
-            GameSettings settings = new GameSettings(GameSettings.MINIMAL_FIELD_SIZE, Substitute.For<IVictoryConditions>());
+            Exception exception = Record.Exception(() => new Game(null));
+            Assert.IsType<ArgumentNullException>(exception);
+        }
 
-            settings.AddPlayer(p); // add one player
-
-            Exception exception = Record.Exception(() => new Game(settings));
-            Assert.IsType<ArgumentOutOfRangeException>(exception);
+        [Fact]
+        public void Constructor_Should_Validate_Settings()
+        {
+            IGameSettings settings = Substitute.For<IGameSettings>();
+            var game = new Game(settings);
+            settings.Received().Validate();
         }
 
         [Theory]

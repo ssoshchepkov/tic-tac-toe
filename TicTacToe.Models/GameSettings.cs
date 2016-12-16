@@ -10,12 +10,17 @@ namespace TicTacToe.Models
     /// <summary>
     /// Contains the basic game informatin: size of field, number of players, sequence of turns, voctory conditions etc.
     /// </summary>
-    public class GameSettings
+    public class GameSettings : IGameSettings
     {
         /// <summary>
         /// Size of a minimal game field.
         /// </summary>
         public const int MINIMAL_FIELD_SIZE = 3;
+
+        /// <summary>
+        /// Minimum amount of players required for the game.
+        /// </summary>
+        private const int MIN_PLAYER_COUNT = 2;
 
         /// <summary>
         /// Creates a new instance of <see cref="GameSettings"/> that contains information for game initialization.
@@ -50,7 +55,7 @@ namespace TicTacToe.Models
         }
 
         /// <summary>
-        /// Height / width of the square game field.
+        /// Gets height / width of the square game field.
         /// </summary>
         public int FieldSize { get; }
 
@@ -60,13 +65,19 @@ namespace TicTacToe.Models
         private readonly List<Player> _players;
 
         /// <summary>
-        /// List players as a read-only list.
+        /// Gets read-only list of players.
         /// </summary>
         public IReadOnlyList<Player> Players => _players;
 
         /// <summary>
-        /// Algoritm that determines victory conditions.
+        /// Gets an algoritm that determines victory conditions.
         /// </summary>
         public IVictoryConditions VictoryConditions { get; }
+
+        public void Validate()
+        {
+            if (Players.Count() < MIN_PLAYER_COUNT)
+                throw new ArgumentOutOfRangeException($"The game should have at least {MIN_PLAYER_COUNT} players!");
+        }
     }
 }
