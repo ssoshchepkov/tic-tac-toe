@@ -13,18 +13,19 @@ namespace TicTacToe.Models.Tests.VictoryConditions
     public class AllInLineVictoryConditionsTests
     {
         [Fact]
-        public void Should_Return_Nothing_For_Unmarked_Field()
+        public void Should_Return_Nothing_For_No_Winners()
         {
             Player player = new Player(Symbols.X);
 
             var field = Substitute.For<IField>();
             field.Size.Returns(3);
+            // Setting up the filed.
             field.GetCell(Arg.Any<int>(), Arg.Any<int>()).Returns(x =>
             {
                 // The cell(1,1) is marked by X.
                 if(x.ArgAt<int>(0) == 1 && x.ArgAt<int>(1) == 1)
                     return new Cell(new Position(x.ArgAt<int>(0), x.ArgAt<int>(1)), player);
-
+                // The others are unmarked.
                 return new Cell(new Position(x.ArgAt<int>(0), x.ArgAt<int>(1)));
             });
 

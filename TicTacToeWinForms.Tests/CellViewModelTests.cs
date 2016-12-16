@@ -97,7 +97,7 @@ namespace TicTacToeWinForms.Tests
         }
 
         [Fact]
-        public async Task  MarkCellCommand_Should_Be_Executeble_For_Empty_Cell()
+        public async Task  MarkCellCommand_Should_Be_Executable_For_Empty_Cell()
         {
             var game = Substitute.For<IGame>();
             game.Field.Size.Returns(1);
@@ -116,7 +116,7 @@ namespace TicTacToeWinForms.Tests
         }
 
         [Fact]
-        public async Task MarkCellCommand_Should_Not_Be_Executeble_For_Marked_Cell()
+        public async Task MarkCellCommand_Should_Not_Be_Executable_For_Marked_Cell()
         {
             var game = Substitute.For<IGame>();
             game.Field.Size.Returns(1);
@@ -135,7 +135,7 @@ namespace TicTacToeWinForms.Tests
         }
 
         [Fact]
-        public async Task MarkCellCommand_Should_Not_Be_Executeble_After_Game_Over()
+        public async Task MarkCellCommand_Should_Not_Be_Executable_After_Game_Over()
         {
             var game = Substitute.For<IGame>();
             game.Field.Size.Returns(3);

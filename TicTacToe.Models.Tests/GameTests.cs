@@ -33,10 +33,8 @@ namespace TicTacToe.Models.Tests
         [InlineData(10)]
         public void Constructor_Should_Create_Field_Of_Specified_Size(int size)
         {
-            GameSettings settings = new GameSettings(size, Substitute.For<IVictoryConditions>());
-
-            settings.AddPlayer(new Player(Symbols.X));
-            settings.AddPlayer(new Player(Symbols.O));
+            var settings = Substitute.For<IGameSettings>();
+            settings.FieldSize.Returns(size);
 
             var game = new Game(settings);
 
@@ -60,7 +58,7 @@ namespace TicTacToe.Models.Tests
         }
 
         [Fact]
-        public void MarkCell_Should_Set_Cell_Player()
+        public void MarkCell_Should_Set_Cell_Player_Property()
         {
             GameSettings settings = new GameSettings(GameSettings.MINIMAL_FIELD_SIZE, Substitute.For<IVictoryConditions>());
 
@@ -160,7 +158,7 @@ namespace TicTacToe.Models.Tests
             var resultList = new List<Cell>() { new Cell(new Position(1, 1)) };
 
             var victoryConditions = Substitute.For<IVictoryConditions>();
-            // FindVictoryLine should success
+            // FindVictoryLine should return successful result
             victoryConditions.FindVictoryLine(Arg.Any<Field>(), Arg.Any<Cell>()).Returns(x => resultList);
 
             GameSettings settings = new GameSettings(GameSettings.MINIMAL_FIELD_SIZE, victoryConditions);
@@ -182,7 +180,7 @@ namespace TicTacToe.Models.Tests
             Assert.Same(currentPlayer, game.CurrentPlayer);
             Assert.Equal(turn, game.Turn);
 
-            // The winner and victory sequence are correct..
+            // The winner and victory sequence are correct.
             Assert.True(game.Result.HasWinner);
             Assert.Same(currentPlayer, game.Result.Winner);
             Assert.Same(resultList, game.Result.VictoryLine);

@@ -18,12 +18,14 @@ namespace TicTacToeWinForms.Tests
         [Fact]
         public void Should_Show_Correct_Turn()
         {
+            const int turn = 0;
+
             var game = Substitute.For<IGame>();
-            game.Turn.Returns(0);
+            game.Turn.Returns(turn);
 
             GameFieldViewModel vm = new GameFieldViewModel(game, Substitute.For<IMessageBoxService>());
 
-            Assert.Equal(1, vm.CurrentTurn);
+            Assert.Equal(turn + 1, vm.CurrentTurn);
         }
 
         [Fact]
