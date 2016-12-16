@@ -54,7 +54,7 @@ namespace TicTacToeWinForms.ViewModels
 
                     string msg = MessagesResource.TieMessage;
 
-                    if (_game.HasWinner)
+                    if (_game.Result.HasWinner)
                     {
                         msg = string.Format(MessagesResource.WinnerMessage, CurrentPlayerSymbol);
                     }

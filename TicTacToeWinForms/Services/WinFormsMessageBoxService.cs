@@ -7,11 +7,11 @@ using System.Windows.Forms;
 
 namespace TicTacToeWinForms.Services
 {
-    public class MessageBoxService : IMessageBoxService
+    public class WinFormsMessageBoxService : IMessageBoxService
     {
         public void Show(string message, string title)
         {
-            MessageBox.Show(message, MessagesResource.GameOverPopupTitle);
+            MessageBox.Show(message, title);
         }
     }
 }

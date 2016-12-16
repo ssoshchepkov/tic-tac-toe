@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TicTacToe.Models;
+using TicTacToe.Models.VictoryConditions;
 using TicTacToeWinForms.Controls;
 using TicTacToeWinForms.Properties;
 using TicTacToeWinForms.Services;
@@ -25,7 +26,11 @@ namespace TicTacToeWinForms
         {
             InitializeComponent();
 
-            VM = new MainViewModel(new ApplicationService(), new MessageBoxService(), new GameSettings(Settings.Default.FieldSize));
+            var settings = new GameSettings(Settings.Default.FieldSize, new AllInLineVictoryConditions());
+            settings.AddPlayer(new Player(Symbols.X)); // X goes first
+            settings.AddPlayer(new Player(Symbols.O));
+
+            VM = new MainViewModel(new WinFormsApplicationService(), new WinFormsMessageBoxService(), settings);
 
             this.BindCommand(VM, x => x.ExitCommand, x => x.exitToolStripMenuItem);
             this.BindCommand(VM, x => x.NewGameCommand, x => x.newGameToolStripMenuItem);
@@ -33,7 +38,7 @@ namespace TicTacToeWinForms
             // Create a view for a new game
             this.WhenAnyValue(x => x.VM.GameField).Where(x => x != null).Subscribe(fieldVM => 
             {
-                // clean-up view of a previous game
+                // clean-up the view of a previous game
                 if (_gameField != null)
                 {
                     _gameField.Dispose();

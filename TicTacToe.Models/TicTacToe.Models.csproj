@@ -43,6 +43,7 @@
     <Compile Include="GameField\Cell.cs" />
     <Compile Include="GameField\Field.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameField\IField.cs" />
     <Compile Include="GameResult.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Player.cs" />

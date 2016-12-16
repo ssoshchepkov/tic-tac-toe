@@ -8,56 +8,93 @@ using TicTacToe.Models.VictoryConditions;
 
 namespace TicTacToe.Models
 {
+    /// <summary>
+    /// Tic-tac-toe game engine.
+    /// </summary>
     public class Game
     {
-        const int FIELD_SIZE = 3;
-
+        /// <summary>
+        /// Index of current active player for <see cref="GameSettings.Players"/> list.
+        /// </summary>
         private int _currentPlayerIndex;
 
+        /// <summary>
+        /// Gets or sets a zero-based number of current game turn.
+        /// </summary>
         public int Turn { get; private set; }
 
+        /// <summary>
+        ///  Gets a value indicating whether this game is over.
+        /// </summary>
         public bool IsGameOver => Result != null;
 
         /// <summary>
-        /// Zero-indexed number of the last game turn.
+        /// Zero-based number of the last game turn.
         /// </summary>
         private readonly int _maxTurn;
 
-        private readonly IVictoryConditions _victoryConditions;
+        /// <summary>
+        /// Minimum amount of players required for the game.
+        /// </summary>
+        private const int MIN_PLAYER_COUNT = 2;
 
+        /// <summary>
+        /// Game settings.
+        /// </summary>
+        private readonly GameSettings _settings;
+
+        /// <summary>
+        ///  Creates a new instance of <see cref="Game"/> with specified game settings.
+        /// </summary>
+        /// <param name="settings">Settings of this game.</param>
         public Game(GameSettings settings)
         {
-            _players = new List<Player>();
-            _players.Add(new Player(Symbols.X));
-            _players.Add(new Player(Symbols.O));
+            if (settings.Players.Count() < MIN_PLAYER_COUNT)
+                throw new ArgumentOutOfRangeException($"The game should have at least {MIN_PLAYER_COUNT} players!");
 
-            Field = new Field(settings.FieldSize);
+            _settings = settings;
 
-            _victoryConditions = new AllInLineVictoryConditions(Field);
+            Field = new Field(_settings.FieldSize);
 
             // turns needed to mark all cells
             _maxTurn = Field.Size * Field.Size - 1;
         }
 
-        public Field Field { get; }
+        /// <summary>
+        /// Gets field of this game.
+        /// </summary>
+        public IField Field { get; }
 
-        private List<Player> _players;
+        /// <summary>
+        /// Gets current active player.
+        /// </summary>
+        public Player CurrentPlayer => _settings.Players[_currentPlayerIndex];
 
-        public Player CurrentPlayer => _players[_currentPlayerIndex];
-
+        /// <summary>
+        /// Gets result of this game.
+        /// </summary>
+        /// <remarks>Result is null if the game is still in progress.</remarks>
         public GameResult Result { get; private set; }
 
-        public bool HasWinner => Result?.HasWinner ?? false;
-
+        /// <summary>
+        /// Marks specified cell with the current player's symbol.
+        /// </summary>
+        /// <param name="cell">The cell to be marked with the current player's symbol.</param>
         public void MarkCell(Cell cell)
         {
-            cell.SetPlayer(CurrentPlayer);
+            if (!cell.IsEmpty) throw new ArgumentException(nameof(cell), "This cell is already marked!");
 
-            var victoryLine = _victoryConditions.FindVictoryLine(cell);
+            if (IsGameOver) throw new InvalidOperationException("This game is over.");
 
+            cell.Mark(CurrentPlayer);
+
+            // Let's try to find winning line.
+            var victoryLine = _settings.VictoryConditions.FindVictoryLine(Field, cell);
+
+            // Found something. The game is over.
             if (victoryLine != null)
             {
-                Result = new GameResult(CurrentPlayer, victoryLine.ToList());
+                Result = new GameResult(CurrentPlayer, victoryLine);
                 return;
             }
 
@@ -72,9 +109,12 @@ namespace TicTacToe.Models
             }
         }
 
+        /// <summary>
+        /// Switch game state to the next turn.
+        /// </summary>
         private void NextTurn()
         {
-            if(_currentPlayerIndex == _players.Count - 1)
+            if(_currentPlayerIndex == _settings.Players.Count - 1)
             {
                 _currentPlayerIndex = 0;
             }else

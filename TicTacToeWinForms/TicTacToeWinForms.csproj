@@ -108,10 +108,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ApplicationService.cs" />
+    <Compile Include="Services\WinFormsApplicationService.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
-    <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\WinFormsMessageBoxService.cs" />
     <Compile Include="ViewModels\CellViewModel.cs" />
     <Compile Include="ViewModels\GameFieldViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

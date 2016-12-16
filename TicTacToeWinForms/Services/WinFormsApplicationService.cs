@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace TicTacToeWinForms.Services
 {
-    public class ApplicationService : IApplicationService
+    public class WinFormsApplicationService : IApplicationService
     {
         public void Exit()
         {

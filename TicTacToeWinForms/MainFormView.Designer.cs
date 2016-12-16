@@ -68,6 +68,7 @@
             this.Controls.Add(this.mainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenu;
+            this.MaximizeBox = false;
             this.Name = "MainFormView";
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
