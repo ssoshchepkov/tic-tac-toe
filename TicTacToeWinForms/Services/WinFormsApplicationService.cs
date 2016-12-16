@@ -7,8 +7,14 @@ using System.Windows.Forms;
 
 namespace TicTacToeWinForms.Services
 {
+    /// <summary>
+    /// WinForms implementation of IApplicationService
+    /// </summary>
     public class WinFormsApplicationService : IApplicationService
     {
+        /// <summary>
+        /// Close the application.
+        /// </summary>
         public void Exit()
         {
             Application.Exit();

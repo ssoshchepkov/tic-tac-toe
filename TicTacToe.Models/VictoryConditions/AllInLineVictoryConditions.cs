@@ -18,6 +18,9 @@ namespace TicTacToe.Models.VictoryConditions
         /// </summary>
         private Cell[] _victoryLine;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="AllInLineVictoryConditions"/>.
+        /// </summary>
         public AllInLineVictoryConditions()
         {
         }

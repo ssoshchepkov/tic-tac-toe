@@ -32,11 +32,7 @@ namespace TicTacToeWinForms
         {
             InitializeComponent();
 
-            var settings = new GameSettings(Settings.Default.FieldSize, new AllInLineVictoryConditions());
-            settings.AddPlayer(new Player(Symbols.X)); // X goes first
-            settings.AddPlayer(new Player(Symbols.O));
-
-            VM = new MainViewModel(new WinFormsApplicationService(), new WinFormsMessageBoxService(), settings);
+            VM = new MainViewModel(new WinFormsApplicationService(), new WinFormsMessageBoxService(), CreateGameSettings());
 
             // Binding 'Exit' menu element
             this.BindCommand(VM, x => x.ExitCommand, x => x.exitToolStripMenuItem);
@@ -56,6 +52,19 @@ namespace TicTacToeWinForms
             });
 
             ResizeWindow();
+        }
+
+        /// <summary>
+        /// Creates settings for the game.
+        /// </summary>
+        /// <returns></returns>
+        private IGameSettings CreateGameSettings()
+        {
+            var settings = new GameSettings(Settings.Default.FieldSize, new AllInLineVictoryConditions());
+            settings.AddPlayer(new Player(Symbols.X)); // X goes first
+            settings.AddPlayer(new Player(Symbols.O));
+
+            return settings;
         }
 
         /// <summary>
